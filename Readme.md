@@ -1,7 +1,7 @@
 # Личный проект «Что посмотреть» [![Build status][travis-image]][travis-url]
 
 * Студент: [Виталий Дедюрин](https://up.htmlacademy.ru/react/6/user/124413).
-* Наставник: `Неизвестно`.
+* Наставник: [Марк Коваленко](https://htmlacademy.ru/profile/id1434381).
 
 ---
 

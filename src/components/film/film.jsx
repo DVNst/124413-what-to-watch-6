@@ -1,32 +1,22 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import MovieCard from '../movie-card/movie-card';
 
-import {moviesSimilar} from './mocks/movies-similar.js';
+import {movies} from '../../mocks/movies';
+import {moviesSimilar} from '../../mocks/movies-similar';
+import {movieMocks} from '../../mocks/movie-mocks';
 
-// const movie = {
-//   'id': 1,
-//   'name': `The Grand Budapest Hotel`,
-//   'poster_image': `img/the-grand-budapest-hotel-poster.jpg`,
-//   'preview_image': `img/the-grand-budapest-hotel.jpg`,
-//   'background_image': `img/the-grand-budapest-hotel-bg.jpg`,
-//   'background_color': `#ffffff`,
-//   'video_link': `https://some-link`,
-//   'preview_video_link': `https://some-link`,
-//   'description': `In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave's friend and protege.`,
-//   'rating': 8.9,
-//   'scores_count': 240,
-//   'director': `Wes Andreson`,
-//   'starring': [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`],
-//   'run_time': 99,
-//   'genre': `Comedy`,
-//   'released': 2014,
-//   'is_favorite': false
-// };
+const Film = (props) => {
+  const {genre, released, poster_image: posterImage, background_image: backgroundImage, rating, scores_count: scoresCount, description, director, starring} = movieMocks;
 
-const MoviePage = ({movie}) => {
-  const {name, genre, released, posterImage, backgroundImage, rating, scoresCount, description, director, starring} = movie;
+  const {match, location} = props;
+
+  const {params: {id}} = match;
+  const movie = movies.find((film) => film.id === Number(id));
+  const name = movie ? movie.name : `${movieMocks.name} ${id}`;
+
   return (
     <>
       <section className="movie-card movie-card--full">
@@ -37,11 +27,11 @@ const MoviePage = ({movie}) => {
           <h1 className="visually-hidden">WTW</h1>
           <header className="page-header movie-card__head">
             <div className="logo">
-              <a href="main.html" className="logo__link">
+              <Link to='/' className="logo__link">
                 <span className="logo__letter logo__letter--1">W</span>
                 <span className="logo__letter logo__letter--2">T</span>
                 <span className="logo__letter logo__letter--3">W</span>
-              </a>
+              </Link>
             </div>
             <div className="user-block">
               <div className="user-block__avatar">
@@ -69,7 +59,7 @@ const MoviePage = ({movie}) => {
                   </svg>
                   <span>My list</span>
                 </button>
-                <a href="add-review.html" className="btn movie-card__button">Add review</a>
+                <Link to={`${location.pathname}/review`} className="btn movie-card__button">Add review</Link>
               </div>
             </div>
           </div>
@@ -83,13 +73,13 @@ const MoviePage = ({movie}) => {
               <nav className="movie-nav movie-card__nav">
                 <ul className="movie-nav__list">
                   <li className="movie-nav__item movie-nav__item--active">
-                    <a href="#" className="movie-nav__link">Overview</a>
+                    <Link to={`${location.pathname}`} className="movie-nav__link">Overview</Link>
                   </li>
                   <li className="movie-nav__item">
-                    <a href="#" className="movie-nav__link">Details</a>
+                    <Link to={`${location.pathname}`} className="movie-nav__link">Details</Link>
                   </li>
                   <li className="movie-nav__item">
-                    <a href="#" className="movie-nav__link">Reviews</a>
+                    <Link to={`${location.pathname}`} className="movie-nav__link">Reviews</Link>
                   </li>
                 </ul>
               </nav>
@@ -120,47 +110,15 @@ const MoviePage = ({movie}) => {
                 movie={movieSimilar}
               />
             ))}
-            <article className="small-movie-card catalog__movies-card">
-              <div className="small-movie-card__image">
-                <img src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg" alt="Fantastic Beasts: The Crimes of Grindelwald" width={280} height={175} />
-              </div>
-              <h3 className="small-movie-card__title">
-                <a className="small-movie-card__link" href="movie-page.html">Fantastic Beasts: The Crimes of Grindelwald</a>
-              </h3>
-            </article>
-            <article className="small-movie-card catalog__movies-card">
-              <div className="small-movie-card__image">
-                <img src="img/bohemian-rhapsody.jpg" alt="Bohemian Rhapsody" width={280} height={175} />
-              </div>
-              <h3 className="small-movie-card__title">
-                <a className="small-movie-card__link" href="movie-page.html">Bohemian Rhapsody</a>
-              </h3>
-            </article>
-            <article className="small-movie-card catalog__movies-card">
-              <div className="small-movie-card__image">
-                <img src="img/macbeth.jpg" alt="Macbeth" width={280} height={175} />
-              </div>
-              <h3 className="small-movie-card__title">
-                <a className="small-movie-card__link" href="movie-page.html">Macbeth</a>
-              </h3>
-            </article>
-            <article className="small-movie-card catalog__movies-card">
-              <div className="small-movie-card__image">
-                <img src="img/aviator.jpg" alt="Aviator" width={280} height={175} />
-              </div>
-              <h3 className="small-movie-card__title">
-                <a className="small-movie-card__link" href="movie-page.html">Aviator</a>
-              </h3>
-            </article>
           </div>
         </section>
         <footer className="page-footer">
           <div className="logo">
-            <a href="main.html" className="logo__link logo__link--light">
+            <Link to='/' className="logo__link logo__link--light">
               <span className="logo__letter logo__letter--1">W</span>
               <span className="logo__letter logo__letter--2">T</span>
               <span className="logo__letter logo__letter--3">W</span>
-            </a>
+            </Link>
           </div>
           <div className="copyright">
             <p>© 2019 What to watch Ltd.</p>
@@ -171,19 +129,21 @@ const MoviePage = ({movie}) => {
   );
 };
 
-MoviePage.propTypes = {
-  movie: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    posterImage: PropTypes.string.isRequired,
-    backgroundImage: PropTypes.string.isRequired,
-    rating: PropTypes.number.isRequired,
-    scoresCount: PropTypes.number.isRequired,
-    description: PropTypes.string.isRequired,
-    director: PropTypes.string.isRequired,
-    starring: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-    genre: PropTypes.string.isRequired,
-    released: PropTypes.number.isRequired,
-  }).isRequired,
+Film.propTypes = {
+  match: PropTypes.object,
+  location: PropTypes.object,
+  // movie: PropTypes.shape({
+  //   name: PropTypes.string.isRequired,
+  //   posterImage: PropTypes.string.isRequired,
+  //   backgroundImage: PropTypes.string.isRequired,
+  //   rating: PropTypes.number.isRequired,
+  //   scoresCount: PropTypes.number.isRequired,
+  //   description: PropTypes.string.isRequired,
+  //   director: PropTypes.string.isRequired,
+  //   starring: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  //   genre: PropTypes.string.isRequired,
+  //   released: PropTypes.number.isRequired,
+  // }).isRequired,
 };
 
-export default MoviePage;
+export default Film;

@@ -1,4 +1,4 @@
-export const movies = [
+export const films = [
   {
     id: 1,
     name: `Fantastic Beasts: The Crimes of Grindelwald`,

@@ -1,12 +1,17 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+
 // import PropTypes from 'prop-types';
+// import {MoviesTypes} from '../proptypes';
+
 
 import MovieCard from '../movie-card/movie-card';
 
-import {movies} from '../../mocks/movies';
+import {films} from '../../mocks/films';
 
 const MyList = () => {
+  const movies = films.slice(0, 8);
+
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
@@ -52,11 +57,6 @@ const MyList = () => {
 };
 
 MyList.propTypes = {
-  // movies: PropTypes.arrayOf(PropTypes.shape({
-  //   id: PropTypes.number.isRequired,
-  //   name: PropTypes.string.isRequired,
-  //   previewImage: PropTypes.string.isRequired,
-  // }).isRequired).isRequired,
 };
 
 export default MyList;

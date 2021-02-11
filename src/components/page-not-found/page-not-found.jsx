@@ -74,18 +74,6 @@ const PageNotFound = () => {
 };
 
 PageNotFound.propTypes = {
-  // movie: PropTypes.shape({
-  //   name: PropTypes.string.isRequired,
-  //   posterImage: PropTypes.string.isRequired,
-  //   backgroundImage: PropTypes.string.isRequired,
-  //   rating: PropTypes.number.isRequired,
-  //   scoresCount: PropTypes.number.isRequired,
-  //   description: PropTypes.string.isRequired,
-  //   director: PropTypes.string.isRequired,
-  //   starring: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-  //   genre: PropTypes.string.isRequired,
-  //   released: PropTypes.number.isRequired,
-  // }).isRequired,
 };
 
 export default PageNotFound;

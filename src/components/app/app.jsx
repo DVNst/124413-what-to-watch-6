@@ -1,6 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
+
+import PropTypes from 'prop-types';
+import {MoviesTypes} from '../proptypes';
 
 import Main from '../main/main';
 import SignIn from '../sign-in/sign-in';
@@ -37,10 +39,6 @@ App.propTypes = {
   moviePromoName: PropTypes.string.isRequired,
   moviePromoGenre: PropTypes.string.isRequired,
   moviePromoReleased: PropTypes.number.isRequired,
-  movies: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    previewImage: PropTypes.string.isRequired,
-  }).isRequired).isRequired,
+  movies: MoviesTypes,
 };
 export default App;

@@ -2,13 +2,15 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import {movies} from '../../mocks/movies';
-import {movieMocks} from '../../mocks/movie-mocks';
+import {films as movies} from '../../mocks/films';
 
 const AddReview = ({match}) => {
   const {params: {id}} = match;
+  // const url = `/films/${id}`;
+  const url = match.url.replace(/\/+$/, ``).replace(/\/review+$/, ``);
+
   const movie = movies.find((film) => film.id === Number(id));
-  const name = movie ? movie.name : `${movieMocks.name} ${id}`;
+  const name = movie ? movie.name : `Film #${id}`;
 
   return (
     <section className="movie-card movie-card--full">
@@ -28,7 +30,7 @@ const AddReview = ({match}) => {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link to={`/films/${id}`} className="breadcrumbs__link">{name}</Link>
+                <Link to={url} className="breadcrumbs__link">{name}</Link>
               </li>
               <li className="breadcrumbs__item">
                 <a className="breadcrumbs__link">Add review</a>
@@ -85,18 +87,6 @@ const AddReview = ({match}) => {
 
 AddReview.propTypes = {
   match: PropTypes.object,
-  // movie: PropTypes.shape({
-  //   name: PropTypes.string.isRequired,
-  //   posterImage: PropTypes.string.isRequired,
-  //   backgroundImage: PropTypes.string.isRequired,
-  //   rating: PropTypes.number.isRequired,
-  //   scoresCount: PropTypes.number.isRequired,
-  //   description: PropTypes.string.isRequired,
-  //   director: PropTypes.string.isRequired,
-  //   starring: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-  //   genre: PropTypes.string.isRequired,
-  //   released: PropTypes.number.isRequired,
-  // }).isRequired,
 };
 
 export default AddReview;

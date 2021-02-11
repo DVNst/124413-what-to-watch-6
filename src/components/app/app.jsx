@@ -15,7 +15,12 @@ import PageNotFound from '../page-not-found/page-not-found';
 const App = ({moviePromoName, moviePromoGenre, moviePromoReleased, movies}) => {
   const getVideoLink = (id) => {
     const movie = movies.find((film) => film.id === Number(id));
-    return movie ? movie.videoLink : ``;
+    return movie ? movie.videoLink : movies[0].videoLink;
+  };
+
+  const getMovie = (id) => {
+    const movie = movies.find((film) => film.id === Number(id));
+    return movie ? movie : movies[0];
   };
 
   return (
@@ -31,8 +36,8 @@ const App = ({moviePromoName, moviePromoGenre, moviePromoReleased, movies}) => {
         </Route>
         <Route path='/login' exact><SignIn /></Route>
         <Route path='/mylist' exact><MyList movies={movies.slice(0, 8)}/></Route>
-        <Route path='/films/:id?' exact component={Film} />
-        <Route path='/films/:id/review' exact component={AddReview} />
+        <Route path='/films/:id?' exact component={(route) => <Film movie={getMovie(route.match.params.id)} match={route.match}/>} />
+        <Route path='/films/:id/review' exact component={(route) => <AddReview movie={getMovie(route.match.params.id)} />} />
         <Route path='/player/:id?' exact component={(route) => <Player videoLink={getVideoLink(route.match.params.id)} />} />
         <Route><PageNotFound /></Route>
       </Switch>

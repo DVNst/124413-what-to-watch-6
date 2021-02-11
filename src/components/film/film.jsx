@@ -1,23 +1,21 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+
 import PropTypes from 'prop-types';
+import {MovieTypes} from '../proptypes';
 
-import MovieCard from '../movie-card/movie-card';
+import MovieList from '../movie-list/movie-list';
 
-import {films as movies} from '../../mocks/films';
+import {films} from '../../mocks/films';
 
-const Film = (props) => {
-  const moviesSimilar = movies.slice(0, 4);
+import {RatingLevelType, RatingLevelValue} from '../../const';
 
-  const {match} = props;
-  const {params: {id}} = match;
+const Film = ({movie, match}) => {
+  const moviesSimilar = films.slice(0, 4);
 
-  // remove trailing slash
-  const url = match.url.replace(/\/+$/, ``);
-
-  const movie = movies.find((film) => film.id === Number(id));
-  const {genre, released, posterImage, backgroundImage, rating, scoresCount, description, director, starring} = movie;
-  const name = movie ? movie.name : `Film #${id}`;
+  const {name, genre, released, posterImage, backgroundImage, rating, scoresCount, description, director, starring} = movie;
+  const url = `${match.url.replace(/\/+$/, ``)}/review`; // remove trailing slash
+  const ratingLevel = RatingLevelType[Object.keys(RatingLevelValue).find((key) => RatingLevelValue[key] >= rating)];
 
   return (
     <>
@@ -61,7 +59,7 @@ const Film = (props) => {
                   </svg>
                   <span>My list</span>
                 </button>
-                <Link to={`${url}/review`} className="btn movie-card__button">Add review</Link>
+                <Link to={url} className="btn movie-card__button">Add review</Link>
               </div>
             </div>
           </div>
@@ -88,7 +86,7 @@ const Film = (props) => {
               <div className="movie-rating">
                 <div className="movie-rating__score">{rating}</div>
                 <p className="movie-rating__meta">
-                  <span className="movie-rating__level">Very good</span>
+                  <span className="movie-rating__level">{ratingLevel}</span>
                   <span className="movie-rating__count">{scoresCount} ratings</span>
                 </p>
               </div>
@@ -106,12 +104,7 @@ const Film = (props) => {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
           <div className="catalog__movies-list">
-            {moviesSimilar.map((movieSimilar) => (
-              <MovieCard
-                key={movieSimilar.id}
-                movie={movieSimilar}
-              />
-            ))}
+            <MovieList movies={moviesSimilar} />
           </div>
         </section>
         <footer className="page-footer">
@@ -133,6 +126,7 @@ const Film = (props) => {
 
 Film.propTypes = {
   match: PropTypes.object,
+  movie: MovieTypes,
 };
 
 export default Film;

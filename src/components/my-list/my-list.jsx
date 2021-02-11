@@ -2,16 +2,11 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 
 // import PropTypes from 'prop-types';
-// import {MoviesTypes} from '../proptypes';
-
+import {MoviesTypes} from '../proptypes';
 
 import MovieCard from '../movie-card/movie-card';
 
-import {films} from '../../mocks/films';
-
-const MyList = () => {
-  const movies = films.slice(0, 8);
-
+const MyList = ({movies}) => {
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
@@ -57,6 +52,7 @@ const MyList = () => {
 };
 
 MyList.propTypes = {
+  movies: MoviesTypes,
 };
 
 export default MyList;

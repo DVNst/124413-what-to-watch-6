@@ -1,6 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
+
+import PropTypes from 'prop-types';
+import {MoviesTypes} from '../proptypes';
 
 import Main from '../main/main';
 import SignIn from '../sign-in/sign-in';
@@ -11,6 +13,16 @@ import Player from '../player/player';
 import PageNotFound from '../page-not-found/page-not-found';
 
 const App = ({moviePromoName, moviePromoGenre, moviePromoReleased, movies}) => {
+  const getVideoLink = (id) => {
+    const movie = movies.find((film) => film.id === Number(id));
+    return movie ? movie.videoLink : movies[0].videoLink;
+  };
+
+  const getMovie = (id) => {
+    const movie = movies.find((film) => film.id === Number(id));
+    return movie ? movie : movies[0];
+  };
+
   return (
     <BrowserRouter>
       <Switch>
@@ -23,10 +35,10 @@ const App = ({moviePromoName, moviePromoGenre, moviePromoReleased, movies}) => {
           />
         </Route>
         <Route path='/login' exact><SignIn /></Route>
-        <Route path='/mylist' exact><MyList /></Route>
-        <Route path='/films/:id?' exact component={Film} />
-        <Route path='/films/:id/review' exact component={AddReview} />
-        <Route path='/player/:id?' exact component={Player} />
+        <Route path='/mylist' exact><MyList movies={movies.slice(0, 8)}/></Route>
+        <Route path='/films/:id?' exact component={(route) => <Film movie={getMovie(route.match.params.id)} match={route.match}/>} />
+        <Route path='/films/:id/review' exact component={(route) => <AddReview movie={getMovie(route.match.params.id)} />} />
+        <Route path='/player/:id?' exact component={(route) => <Player videoLink={getVideoLink(route.match.params.id)} />} />
         <Route><PageNotFound /></Route>
       </Switch>
     </BrowserRouter>
@@ -37,10 +49,6 @@ App.propTypes = {
   moviePromoName: PropTypes.string.isRequired,
   moviePromoGenre: PropTypes.string.isRequired,
   moviePromoReleased: PropTypes.number.isRequired,
-  movies: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    previewImage: PropTypes.string.isRequired,
-  }).isRequired).isRequired,
+  movies: MoviesTypes,
 };
 export default App;

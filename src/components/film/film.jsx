@@ -1,21 +1,21 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+
 import PropTypes from 'prop-types';
+import {MovieTypes} from '../proptypes';
 
-import MovieCard from '../movie-card/movie-card';
+import MovieList from '../movie-list/movie-list';
 
-import {movies} from '../../mocks/movies';
-import {moviesSimilar} from '../../mocks/movies-similar';
-import {movieMocks} from '../../mocks/movie-mocks';
+import {films} from '../../mocks/films';
 
-const Film = (props) => {
-  const {genre, released, poster_image: posterImage, background_image: backgroundImage, rating, scores_count: scoresCount, description, director, starring} = movieMocks;
+import {RatingLevelType, RatingLevelValue} from '../../const';
 
-  const {match, location} = props;
+const Film = ({movie, match}) => {
+  const moviesSimilar = films.slice(0, 4);
 
-  const {params: {id}} = match;
-  const movie = movies.find((film) => film.id === Number(id));
-  const name = movie ? movie.name : `${movieMocks.name} ${id}`;
+  const {name, genre, released, posterImage, backgroundImage, rating, scoresCount, description, director, starring} = movie;
+  const url = `${match.url.replace(/\/+$/, ``)}/review`; // remove trailing slash
+  const ratingLevel = RatingLevelType[Object.keys(RatingLevelValue).find((key) => RatingLevelValue[key] >= rating)];
 
   return (
     <>
@@ -59,7 +59,7 @@ const Film = (props) => {
                   </svg>
                   <span>My list</span>
                 </button>
-                <Link to={`${location.pathname}/review`} className="btn movie-card__button">Add review</Link>
+                <Link to={url} className="btn movie-card__button">Add review</Link>
               </div>
             </div>
           </div>
@@ -73,20 +73,20 @@ const Film = (props) => {
               <nav className="movie-nav movie-card__nav">
                 <ul className="movie-nav__list">
                   <li className="movie-nav__item movie-nav__item--active">
-                    <Link to={`${location.pathname}`} className="movie-nav__link">Overview</Link>
+                    <Link to={`${match.url}`} className="movie-nav__link">Overview</Link>
                   </li>
                   <li className="movie-nav__item">
-                    <Link to={`${location.pathname}`} className="movie-nav__link">Details</Link>
+                    <Link to={`${match.url}`} className="movie-nav__link">Details</Link>
                   </li>
                   <li className="movie-nav__item">
-                    <Link to={`${location.pathname}`} className="movie-nav__link">Reviews</Link>
+                    <Link to={`${match.url}`} className="movie-nav__link">Reviews</Link>
                   </li>
                 </ul>
               </nav>
               <div className="movie-rating">
                 <div className="movie-rating__score">{rating}</div>
                 <p className="movie-rating__meta">
-                  <span className="movie-rating__level">Very good</span>
+                  <span className="movie-rating__level">{ratingLevel}</span>
                   <span className="movie-rating__count">{scoresCount} ratings</span>
                 </p>
               </div>
@@ -104,12 +104,7 @@ const Film = (props) => {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
           <div className="catalog__movies-list">
-            {moviesSimilar.map((movieSimilar) => (
-              <MovieCard
-                key={movieSimilar.id}
-                movie={movieSimilar}
-              />
-            ))}
+            <MovieList movies={moviesSimilar} />
           </div>
         </section>
         <footer className="page-footer">
@@ -131,19 +126,7 @@ const Film = (props) => {
 
 Film.propTypes = {
   match: PropTypes.object,
-  location: PropTypes.object,
-  // movie: PropTypes.shape({
-  //   name: PropTypes.string.isRequired,
-  //   posterImage: PropTypes.string.isRequired,
-  //   backgroundImage: PropTypes.string.isRequired,
-  //   rating: PropTypes.number.isRequired,
-  //   scoresCount: PropTypes.number.isRequired,
-  //   description: PropTypes.string.isRequired,
-  //   director: PropTypes.string.isRequired,
-  //   starring: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-  //   genre: PropTypes.string.isRequired,
-  //   released: PropTypes.number.isRequired,
-  // }).isRequired,
+  movie: MovieTypes,
 };
 
 export default Film;

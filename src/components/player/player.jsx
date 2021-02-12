@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Player = () => {
+const Player = ({videoLink}) => {
   return (
     <div className="player">
-      <video src="#" className="player__video" poster="img/player-poster.jpg" />
+      <video src={videoLink} className="player__video" poster="img/player-poster.jpg" autoPlay muted />
       <button type="button" className="player__exit">Exit</button>
       <div className="player__controls">
         <div className="player__controls-row">
@@ -35,7 +35,7 @@ const Player = () => {
 };
 
 Player.propTypes = {
-  match: PropTypes.object,
+  videoLink: PropTypes.string.isRequired,
 };
 
 export default Player;

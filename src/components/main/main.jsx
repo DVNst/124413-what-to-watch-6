@@ -1,8 +1,10 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import PropTypes from 'prop-types';
 
-import MovieCard from '../movie-card/movie-card';
+import PropTypes from 'prop-types';
+import {MoviesTypes} from '../proptypes';
+
+import MovieList from '../movie-list/movie-list';
 
 const Main = ({moviePromoName, moviePromoGenre, moviePromoReleased, movies}) => {
   return (
@@ -91,12 +93,7 @@ const Main = ({moviePromoName, moviePromoGenre, moviePromoReleased, movies}) => 
             </li>
           </ul>
           <div className="catalog__movies-list">
-            {movies.map((movie) => (
-              <MovieCard
-                key={movie.id}
-                movie={movie}
-              />
-            ))}
+            <MovieList movies={movies} />
           </div>
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>
@@ -123,11 +120,7 @@ Main.propTypes = {
   moviePromoName: PropTypes.string.isRequired,
   moviePromoGenre: PropTypes.string.isRequired,
   moviePromoReleased: PropTypes.number.isRequired,
-  movies: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    previewImage: PropTypes.string.isRequired,
-  }).isRequired).isRequired,
+  movies: MoviesTypes,
 };
 
 export default Main;

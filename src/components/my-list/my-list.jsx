@@ -1,12 +1,12 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+
 // import PropTypes from 'prop-types';
+import {MoviesTypes} from '../proptypes';
 
 import MovieCard from '../movie-card/movie-card';
 
-import {movies} from '../../mocks/movies';
-
-const MyList = () => {
+const MyList = ({movies}) => {
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
@@ -52,11 +52,7 @@ const MyList = () => {
 };
 
 MyList.propTypes = {
-  // movies: PropTypes.arrayOf(PropTypes.shape({
-  //   id: PropTypes.number.isRequired,
-  //   name: PropTypes.string.isRequired,
-  //   previewImage: PropTypes.string.isRequired,
-  // }).isRequired).isRequired,
+  movies: MoviesTypes,
 };
 
 export default MyList;

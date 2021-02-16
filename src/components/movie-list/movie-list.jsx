@@ -18,7 +18,7 @@ const MovieList = ({movies}) => {
           key={movie.id}
           movie={movie}
           onMouseOverMovieCard={handleMouseOverMovieCard}
-          movieActive={movieActive}
+          showVideoPlayer={movieActive === movie.id}
         />
       ))}
     </>

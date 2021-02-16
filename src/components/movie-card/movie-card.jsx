@@ -5,7 +5,7 @@ import {MovieTypes} from '../proptypes';
 
 import VideoPlayer from '../video-player/video-player';
 
-const MovieCard = ({movie, onMouseOverMovieCard, movieActive}) => {
+const MovieCard = ({movie, onMouseOverMovieCard, showVideoPlayer}) => {
   const {id, name, previewImage, previewVideoLink} = movie;
   const url = `/films/${id}`;
 
@@ -14,7 +14,7 @@ const MovieCard = ({movie, onMouseOverMovieCard, movieActive}) => {
   useEffect(() => {
     let timerId = null;
 
-    if (movieActive === id) {
+    if (showVideoPlayer) {
       timerId = setTimeout(() => (setVideoPlayerVisible(true)), 1000);
     }
 
@@ -24,7 +24,7 @@ const MovieCard = ({movie, onMouseOverMovieCard, movieActive}) => {
       }
       setVideoPlayerVisible(false);
     };
-  }, [movieActive]);
+  }, [showVideoPlayer]);
 
   return (
     <article className="small-movie-card catalog__movies-card"
@@ -47,7 +47,7 @@ const MovieCard = ({movie, onMouseOverMovieCard, movieActive}) => {
 MovieCard.propTypes = {
   movie: MovieTypes,
   onMouseOverMovieCard: PropTypes.func.isRequired,
-  movieActive: PropTypes.number
+  showVideoPlayer: PropTypes.bool.isRequired,
 };
 
 export default MovieCard;

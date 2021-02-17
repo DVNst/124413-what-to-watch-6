@@ -31,7 +31,7 @@ const App = ({moviePromoName, moviePromoGenre, moviePromoReleased, movies}) => {
             moviePromoName={moviePromoName}
             moviePromoGenre={moviePromoGenre}
             moviePromoReleased={moviePromoReleased}
-            movies={movies}
+            movies={movies.slice(0, -1)}
           />
         </Route>
         <Route path='/login' exact><SignIn /></Route>

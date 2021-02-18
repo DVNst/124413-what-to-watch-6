@@ -4,27 +4,16 @@ import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {MovieTypes} from '../proptypes';
 
-import Review from '../review/review';
 import MovieList from '../movie-list/movie-list';
 import Tabs from '../tabs/tabs';
 
 import {films} from '../../mocks/films';
-import {reviews} from '../../mocks/reviews';
 
-import {RatingLevelType, RatingLevelValue} from '../../const';
 
-const Film = ({movie, match}) => {
-  const moviesSimilar = films.slice(0, 4);
-
-  const {name, genre, released, posterImage, backgroundImage, rating, scoresCount, description, director, starring, runTime} = movie;
-  const url = `${match.url.replace(/\/+$/, ``)}/review`; // remove trailing slash
-  const ratingLevel = RatingLevelType[Object.keys(RatingLevelValue).find((key) => RatingLevelValue[key] >= rating)];
-
-  const movieReviews = reviews.filter((review) => review.moviesId === movie.id);
-
-  const hours = Math.floor(runTime / 60);
-  const minutes = runTime - hours * 60;
-  const runTimeFormat = `${hours ? hours + `h` : ``} ${minutes}m`;
+const Film = ({movie, route}) => {
+  const {id, name, genre, released, posterImage, backgroundImage} = movie;
+  const url = `${route.match.url.replace(/\/+$/, ``)}/review`; // remove trailing slash
+  const moviesSimilar = films.filter((film) => film.genre === genre && film.id !== id).slice(0, 4);
 
   return (
     <>
@@ -78,7 +67,7 @@ const Film = ({movie, match}) => {
             <div className="movie-card__poster movie-card__poster--big">
               <img src={posterImage} alt={name} width={218} height={327} />
             </div>
-            <Tabs movie={movie}/>
+            <Tabs movie={movie} route={route}/>
           </div>
         </div>
       </section>
@@ -107,7 +96,7 @@ const Film = ({movie, match}) => {
 };
 
 Film.propTypes = {
-  match: PropTypes.object,
+  route: PropTypes.object,
   movie: MovieTypes,
 };
 

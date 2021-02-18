@@ -6,6 +6,8 @@ export const MovieTypes = PropTypes.shape({
   previewImage: PropTypes.string.isRequired,
 }).isRequired;
 
+export const MoviesTypes = PropTypes.arrayOf(MovieTypes).isRequired;
+
 export const ReviewTypes = PropTypes.shape({
   id: PropTypes.number.isRequired,
   moviesId: PropTypes.number.isRequired,
@@ -18,4 +20,4 @@ export const ReviewTypes = PropTypes.shape({
   date: PropTypes.string.isRequired,
 }).isRequired;
 
-export const MoviesTypes = PropTypes.arrayOf(MovieTypes).isRequired;
+export const ReviewsTypes = PropTypes.arrayOf(ReviewTypes).isRequired;

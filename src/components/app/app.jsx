@@ -36,7 +36,7 @@ const App = ({moviePromoName, moviePromoGenre, moviePromoReleased, movies}) => {
         </Route>
         <Route path='/login' exact><SignIn /></Route>
         <Route path='/mylist' exact><MyList movies={movies.slice(0, 8)}/></Route>
-        <Route path='/films/:id?' exact component={(route) => <Film movie={getMovie(route.match.params.id)} match={route.match}/>} />
+        <Route path='/films/:id?' exact component={(route) => <Film movie={getMovie(route.match.params.id)} route={route}/>} />
         <Route path='/films/:id/review' exact component={(route) => <AddReview movie={getMovie(route.match.params.id)} />} />
         <Route path='/player/:id?' exact component={(route) => <Player videoLink={getVideoLink(route.match.params.id)} />} />
         <Route><PageNotFound /></Route>

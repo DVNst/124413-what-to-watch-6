@@ -13,12 +13,12 @@ const MovieList = ({movies}) => {
 
   return (
     <>
-      <div className="visually-hidden">{movieActive}</div>
       {movies.map((movie) => (
         <MovieCard
           key={movie.id}
           movie={movie}
           onMouseOverMovieCard={handleMouseOverMovieCard}
+          showVideoPlayer={movieActive === movie.id}
         />
       ))}
     </>

@@ -31,15 +31,18 @@ const MovieCard = ({movie, onMouseOverMovieCard, showVideoPlayer}) => {
       onMouseOver={() => onMouseOverMovieCard(id)}
       onMouseOut={() => onMouseOverMovieCard(null)}
     >
-      {videoPlayerVisible && <VideoPlayer url={previewVideoLink} poster={previewImage}/>}
-      {!videoPlayerVisible && <>
-        <div className="small-movie-card__image">
-          <img src={previewImage} alt={name} width={280} height={175} />
-        </div>
-        <h3 className="small-movie-card__title">
-          <a className="small-movie-card__link" href={url}>{name}</a>
-        </h3>
-      </>}
+      {videoPlayerVisible ?
+        <VideoPlayer url={previewVideoLink} poster={previewImage}/>
+        :
+        <>
+          <div className="small-movie-card__image">
+            <img src={previewImage} alt={name} width={280} height={175} />
+          </div>
+          <h3 className="small-movie-card__title">
+            <a className="small-movie-card__link" href={url}>{name}</a>
+          </h3>
+        </>
+      }
     </article>
   );
 };

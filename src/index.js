@@ -16,7 +16,7 @@ ReactDOM.render(
       moviePromoName={Setting.MOVIE_PROMO_NAME}
       moviePromoGenre={Setting.MOVIE_PROMO_GENRE}
       moviePromoReleased={Setting.MOVIE_PROMO_RELEASED}
-      movies={films.slice(0, -1)}
+      movies={films}
     />,
     document.querySelector(`#root`)
 );

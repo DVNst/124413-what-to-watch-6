@@ -1,3 +1,5 @@
+export const ganre = [`Comedy`, `Crime`, `Documentary`, `Dramas`, `Horror`, `Kids & Family`, `Romance`, `Sci-Fi`, `Thrillers`];
+
 export const ReviewTextSetting = {
   MIN: 50,
   MAX: 400,

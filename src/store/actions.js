@@ -1,10 +1,6 @@
 export const ActionType = {
   CHANGE_GENRE: `changeGenre`,
-  GET_FILMS: `getFilms`,
-};
-
-const getFilmsByGenre = (films, genre) => {
-  return (genre !== `All genres`) ? films.filter((film) => film.genre === genre) : films;
+  GET_FILMS_BY_GENRE: `getFilmsByGenre`,
 };
 
 export const ActionCreator = {
@@ -12,8 +8,8 @@ export const ActionCreator = {
     type: ActionType.CHANGE_GENRE,
     payload: genre,
   }),
-  getFilms: (films, genre) => ({
-    type: ActionType.GET_FILMS,
-    payload: getFilmsByGenre(films, genre),
+  getFilmsByGenre: (genre) => ({
+    type: ActionType.GET_FILMS_BY_GENRE,
+    payload: genre,
   }),
 };

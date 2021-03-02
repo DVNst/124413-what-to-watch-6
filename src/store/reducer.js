@@ -1,20 +1,25 @@
 import {ActionType} from './actions';
-// import {ganre} from '../const';
+
+import {ALL_GENRES} from '../const';
 
 import {films} from '../mocks/films';
 
-const getGenre = () => {
-  const genre = new Set();
-  genre.add(`All genres`);
-  films.map((film) => genre.add(film.genre));
+const getGenres = () => {
+  const genres = new Set();
+  films.map((film) => genres.add(film.genre));
 
-  return genre;
+  return [ALL_GENRES, ...Array.from(genres).sort()];
 };
 
+const getFilmsByGenre = (genre) => ((genre !== ALL_GENRES) ? films.filter((film) => film.genre === genre) : films);
+
 const initialState = {
-  genre: getGenre(),
-  filmsByGenre: films,
-  films,
+  movies: films,
+  moviesByGenre: films,
+  genres: getGenres(),
+  genreActive: ALL_GENRES,
+  moviePromo: films[20],
+  moviesFavorites: films.slice(0, 8),
 };
 
 const reducer = (state = initialState, action) => {
@@ -22,13 +27,13 @@ const reducer = (state = initialState, action) => {
     case ActionType.CHANGE_GENRE:
       return {
         ...state,
-        genre: action.payload
+        genreActive: action.payload
       };
 
-    case ActionType.GET_FILMS:
+    case ActionType.GET_FILMS_BY_GENRE:
       return {
         ...state,
-        filmsByGenre: action.payload
+        movieByGenre: getFilmsByGenre(action.payload)
       };
 
     default: return state;

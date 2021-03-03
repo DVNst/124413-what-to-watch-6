@@ -1,12 +1,12 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
 
-// import PropTypes from 'prop-types';
 import {MoviesTypes} from '../proptypes';
 
-import MovieCard from '../movie-card/movie-card';
+import MovieList from '../movie-list/movie-list';
 
-const MyList = ({movies}) => {
+const MyList = ({moviesFavorites}) => {
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
@@ -27,12 +27,9 @@ const MyList = ({movies}) => {
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
         <div className="catalog__movies-list">
-          {movies.map((movie) => (
-            <MovieCard
-              key={movie.id}
-              movie={movie}
-            />
-          ))}
+          <MovieList
+            movies={moviesFavorites}
+          />
         </div>
       </section>
       <footer className="page-footer">
@@ -52,7 +49,12 @@ const MyList = ({movies}) => {
 };
 
 MyList.propTypes = {
-  movies: MoviesTypes,
+  moviesFavorites: MoviesTypes,
 };
 
-export default MyList;
+const mapStateToProps = (state) => ({
+  moviesFavorites: state.moviesFavorites,
+});
+
+export {MyList};
+export default connect(mapStateToProps)(MyList);

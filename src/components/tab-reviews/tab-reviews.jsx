@@ -1,6 +1,5 @@
 import React from 'react';
 
-// import PropTypes from 'prop-types';
 import {ReviewsTypes} from '../proptypes';
 
 import Review from '../review/review';

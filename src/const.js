@@ -1,3 +1,7 @@
+export const ALL_GENRES = `All genres`;
+
+export const NUMBER_IN_SHOW = 8;
+
 export const ReviewTextSetting = {
   MIN: 50,
   MAX: 400,

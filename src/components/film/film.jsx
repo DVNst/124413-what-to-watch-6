@@ -12,7 +12,7 @@ import {films} from '../../mocks/films';
 
 const Film = ({movie, route}) => {
   const {id, name, genre, released, posterImage, backgroundImage} = movie;
-  const url = `${route.match.url.replace(/\/+$/, ``)}/review`; // remove trailing slash
+  const url = `${route.match.url.replace(/\/+$/, ``)}/review`;
   const moviesSimilar = films.filter((film) => film.genre === genre && film.id !== id).slice(0, 4);
 
   return (

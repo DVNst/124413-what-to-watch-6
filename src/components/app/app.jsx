@@ -1,7 +1,7 @@
 import React from 'react';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
+import {connect} from 'react-redux';
 
-import PropTypes from 'prop-types';
 import {MoviesTypes} from '../proptypes';
 
 import Main from '../main/main';
@@ -12,7 +12,7 @@ import AddReview from '../add-review/add-review';
 import Player from '../player/player';
 import PageNotFound from '../page-not-found/page-not-found';
 
-const App = ({moviePromoName, moviePromoGenre, moviePromoReleased, movies}) => {
+const App = ({movies}) => {
   const getVideoLink = (id) => {
     const movie = movies.find((film) => film.id === Number(id));
     return movie ? movie.videoLink : movies[0].videoLink;
@@ -26,16 +26,9 @@ const App = ({moviePromoName, moviePromoGenre, moviePromoReleased, movies}) => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path='/' exact>
-          <Main
-            moviePromoName={moviePromoName}
-            moviePromoGenre={moviePromoGenre}
-            moviePromoReleased={moviePromoReleased}
-            movies={movies.slice(0, -1)}
-          />
-        </Route>
+        <Route path='/' exact><Main /></Route>
         <Route path='/login' exact><SignIn /></Route>
-        <Route path='/mylist' exact><MyList movies={movies.slice(0, 8)}/></Route>
+        <Route path='/mylist' exact><MyList /></Route>
         <Route path='/films/:id?' exact component={(route) => <Film movie={getMovie(route.match.params.id)} route={route}/>} />
         <Route path='/films/:id/review' exact component={(route) => <AddReview movie={getMovie(route.match.params.id)} />} />
         <Route path='/player/:id?' exact component={(route) => <Player videoLink={getVideoLink(route.match.params.id)} />} />
@@ -46,9 +39,12 @@ const App = ({moviePromoName, moviePromoGenre, moviePromoReleased, movies}) => {
 };
 
 App.propTypes = {
-  moviePromoName: PropTypes.string.isRequired,
-  moviePromoGenre: PropTypes.string.isRequired,
-  moviePromoReleased: PropTypes.number.isRequired,
   movies: MoviesTypes,
 };
-export default App;
+
+const mapStateToProps = (state) => ({
+  movies: state.movies,
+});
+
+export {App};
+export default connect(mapStateToProps)(App);

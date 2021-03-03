@@ -6,7 +6,6 @@ const AddReviewForm = () => {
   const [reviewText, setReviewText] = useState(``);
   const [rating, setRating] = useState(0);
   const [reviewError, setReviewError] = useState(true);
-  // const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (reviewText.length >= ReviewTextSetting.MIN && reviewText.length <= ReviewTextSetting.MAX && rating > 0) {
@@ -72,8 +71,6 @@ const AddReviewForm = () => {
   );
 };
 
-AddReviewForm.propTypes = {
-  // movie: MovieTypes,
-};
+AddReviewForm.propTypes = {};
 
 export default AddReviewForm;

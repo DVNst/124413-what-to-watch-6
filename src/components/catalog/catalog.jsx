@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 
 import PropTypes from 'prop-types';
@@ -23,6 +23,11 @@ const Catalog = ({moviesByGenre, genres, genreActive, handleClickGenre}) => {
     setNumberMovies(qty);
     setMoviesShow(getMoviesShow(qty));
   };
+
+  useEffect(() => {
+    setNumberMovies(NUMBER_IN_SHOW);
+    setMoviesShow(getMoviesShow(NUMBER_IN_SHOW));
+  }, [genreActive]);
 
   return (
     <section className="catalog">

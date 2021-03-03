@@ -2,7 +2,6 @@ import React from 'react';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import {connect} from 'react-redux';
 
-// import PropTypes from 'prop-types';
 import {MoviesTypes} from '../proptypes';
 
 import Main from '../main/main';

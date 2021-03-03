@@ -1,7 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-// import PropTypes from 'prop-types';
 import {MovieTypes} from '../proptypes';
 
 import AddReviewForm from '../add-review-form/add-review-form';
@@ -10,7 +9,6 @@ const AddReview = ({movie}) => {
   const {id, name, posterImage} = movie;
 
   const url = `/films/${id}`;
-  // const url = match.url.replace(/\/+$/, ``).replace(/\/review+$/, ``);
 
   return (
     <section className="movie-card movie-card--full">

@@ -1,6 +1,5 @@
 import React, {Fragment} from 'react';
 
-// import PropTypes from 'prop-types';
 import {MovieTypes} from '../proptypes';
 
 const TabDetails = ({movie}) => {

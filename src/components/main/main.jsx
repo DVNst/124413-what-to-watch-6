@@ -2,7 +2,6 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 
-// import PropTypes from 'prop-types';
 import {MovieTypes} from '../proptypes';
 
 import Catalog from '../catalog/catalog';
@@ -84,13 +83,6 @@ Main.propTypes = {
 const mapStateToProps = (state) => ({
   moviePromo: state.moviePromo,
 });
-
-// const mapDispatchToProps = (dispatch) => ({
-//   onUserAnswer(question, answer) {
-//     dispatch(ActionCreator.incrementStep());
-//     dispatch(ActionCreator.incrementMistake(question, answer));
-//   },
-// });
 
 export {Main};
 export default connect(mapStateToProps)(Main);

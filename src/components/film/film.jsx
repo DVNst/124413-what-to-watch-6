@@ -8,12 +8,12 @@ import MovieList from '../movie-list/movie-list';
 import Tabs from '../tabs/tabs';
 
 import {films} from '../../mocks/films';
-
+import {NUMBER_OF_SIMILAR} from '../../const';
 
 const Film = ({movie, route}) => {
   const {id, name, genre, released, posterImage, backgroundImage} = movie;
   const url = `${route.match.url.replace(/\/+$/, ``)}/review`;
-  const moviesSimilar = films.filter((film) => film.genre === genre && film.id !== id).slice(0, 4);
+  const moviesSimilar = films.filter((film) => film.genre === genre && film.id !== id).slice(0, NUMBER_OF_SIMILAR);
 
   return (
     <>

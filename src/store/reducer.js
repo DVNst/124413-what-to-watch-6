@@ -1,12 +1,17 @@
 import {ActionType} from './actions';
 
-import {ALL_GENRES} from '../const';
+import {ALL_GENRES, NUMBER_IN_GENRES} from '../const';
 
 import {films} from '../mocks/films';
 
 const getGenres = () => {
-  const genres = new Set();
-  films.map((film) => genres.add(film.genre));
+  const _genres = new Map();
+  films.map((film) => _genres.set(
+      film.genre,
+      _genres.get(film.genre) ? _genres.get(film.genre) + 1 : 1)
+  );
+
+  const genres = Array.from(_genres).sort((a, b) => b[1] - a[1]).map((genre) => genre[0]).slice(0, NUMBER_IN_GENRES).sort();
 
   return [ALL_GENRES, ...Array.from(genres).sort()];
 };

@@ -6,6 +6,7 @@ import {MoviesTypes} from '../proptypes';
 import {ActionCreator} from '../../store/actions';
 
 import MovieList from '../movie-list/movie-list';
+import ShowMore from '../show-more/show-more';
 
 import {NUMBER_IN_SHOW} from '../../const';
 
@@ -17,17 +18,17 @@ const Catalog = ({moviesByGenre, genres, genreActive, handleClickGenre}) => {
   const [moviesShow, setMoviesShow] = useState(getMoviesShow(NUMBER_IN_SHOW));
   const [numberMovies, setNumberMovies] = useState(NUMBER_IN_SHOW);
 
+  useEffect(() => {
+    setNumberMovies(NUMBER_IN_SHOW);
+    setMoviesShow(getMoviesShow(NUMBER_IN_SHOW));
+  }, [genreActive]);
+
   const handleClickShowMore = () => {
     const _qty = numberMovies + NUMBER_IN_SHOW;
     const qty = (_qty < moviesByGenre.length) ? _qty : moviesByGenre.length;
     setNumberMovies(qty);
     setMoviesShow(getMoviesShow(qty));
   };
-
-  useEffect(() => {
-    setNumberMovies(NUMBER_IN_SHOW);
-    setMoviesShow(getMoviesShow(NUMBER_IN_SHOW));
-  }, [genreActive]);
 
   return (
     <section className="catalog">
@@ -43,17 +44,9 @@ const Catalog = ({moviesByGenre, genres, genreActive, handleClickGenre}) => {
           </li>
         ))}
       </ul>
-      <div className="catalog__movies-list">
-        <MovieList movies={moviesShow} />
-      </div>
+      <MovieList movies={moviesShow} />
       {(numberMovies < moviesByGenre.length) &&
-        <div className="catalog__more">
-          <button
-            onClick={handleClickShowMore}
-            className="catalog__button" type="button"
-          >Show more</button>
-        </div>
-      }
+        <ShowMore onClickShowMore={handleClickShowMore} />}
     </section>
   );
 };

@@ -12,7 +12,7 @@ const MovieList = ({movies}) => {
   };
 
   return (
-    <>
+    <div className="catalog__movies-list">
       {movies.map((movie) => (
         <MovieCard
           key={movie.id}
@@ -21,7 +21,7 @@ const MovieList = ({movies}) => {
           showVideoPlayer={movieActive === movie.id}
         />
       ))}
-    </>
+    </div>
   );
 };
 

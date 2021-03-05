@@ -26,11 +26,9 @@ const MyList = ({moviesFavorites}) => {
       </header>
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
-        <div className="catalog__movies-list">
-          <MovieList
-            movies={moviesFavorites}
-          />
-        </div>
+        <MovieList
+          movies={moviesFavorites}
+        />
       </section>
       <footer className="page-footer">
         <div className="logo">

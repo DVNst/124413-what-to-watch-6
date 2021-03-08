@@ -4,6 +4,8 @@ export const ActionType = {
   LOAD_FILMS: `loadFilms`,
   LOAD_FILM_PROMO: `loadFilmPromo`,
   LOAD_FILMS_FAVORITE: `loadFilmsFavorite`,
+  LOAD_FILM: `loadFilm`,
+  LOAD_COMMENTS: `loadComments`,
   REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
 };
 
@@ -27,6 +29,14 @@ export const ActionCreator = {
   loadFilmsFavorite: (films) => ({
     type: ActionType.LOAD_FILMS_FAVORITE,
     payload: films
+  }),
+  loadFilm: (film) => ({
+    type: ActionType.LOAD_FILM,
+    payload: film
+  }),
+  loadComments: (film) => ({
+    type: ActionType.LOAD_COMMENTS,
+    payload: film
   }),
   requireAuthorization: (status) => ({
     type: ActionType.REQUIRED_AUTHORIZATION,

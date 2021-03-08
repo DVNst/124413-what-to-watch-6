@@ -13,12 +13,18 @@ const TabReviews = ({reviews}) => {
 
   return (
     <div className="movie-card__reviews movie-card__row">
-      <div className="movie-card__reviews-col">
-        {getReviews(reviewsLeft)}
-      </div>
-      <div className="movie-card__reviews-col">
-        {getReviews(reviewsRight)}
-      </div>
+      {reviews.length > 0 ?
+        <>
+          <div className="movie-card__reviews-col">
+            {getReviews(reviewsLeft)}
+          </div>
+          <div className="movie-card__reviews-col">
+            {getReviews(reviewsRight)}
+          </div>
+        </>
+        :
+        <p>No reviews</p>
+      }
     </div>
   );
 };

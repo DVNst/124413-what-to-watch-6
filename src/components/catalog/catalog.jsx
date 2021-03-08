@@ -52,9 +52,10 @@ const Catalog = ({moviesByGenre, isDataLoaded, onLoadData, genres, genreActive, 
           </li>
         ))}
       </ul>
-      {!isDataLoaded ?
-        <LoadingScreen /> :
+      {isDataLoaded ?
         <MovieList movies={moviesShow} />
+        :
+        <LoadingScreen />
       }
       {(numberMovies < moviesByGenre.length) &&
         <ShowMore onClickShowMore={handleClickShowMore} />}
@@ -71,6 +72,13 @@ Catalog.propTypes = {
   handleClickGenre: PropTypes.func.isRequired,
 };
 
+const mapStateToProps = (state) => ({
+  moviesByGenre: state.moviesByGenre,
+  isDataLoaded: state.isDataLoaded,
+  genres: state.genres,
+  genreActive: state.genreActive,
+});
+
 const mapDispatchToProps = (dispatch) => ({
   onLoadData() {
     dispatch(fetchFilms());
@@ -79,13 +87,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(ActionCreator.changeGenre(genre));
     dispatch(ActionCreator.getFilmsByGenre(genre));
   },
-});
-
-const mapStateToProps = (state) => ({
-  moviesByGenre: state.moviesByGenre,
-  isDataLoaded: state.isDataLoaded,
-  genres: state.genres,
-  genreActive: state.genreActive,
 });
 
 export {Catalog};

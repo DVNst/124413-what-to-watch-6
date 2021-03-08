@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 
 export const MovieTypes = PropTypes.shape({
-  id: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  previewImage: PropTypes.string.isRequired,
-  previewVideoLink: PropTypes.string.isRequired,
+  id: PropTypes.number,
+  name: PropTypes.string,
+  previewImage: PropTypes.string,
+  previewVideoLink: PropTypes.string,
 }).isRequired;
 
 export const MoviePromoTypes = PropTypes.shape({
@@ -19,7 +19,6 @@ export const MoviesTypes = PropTypes.arrayOf(MovieTypes);
 
 export const ReviewTypes = PropTypes.shape({
   id: PropTypes.number.isRequired,
-  moviesId: PropTypes.number.isRequired,
   user: PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
@@ -27,6 +26,6 @@ export const ReviewTypes = PropTypes.shape({
   rating: PropTypes.number.isRequired,
   comment: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
-}).isRequired;
+});
 
 export const ReviewsTypes = PropTypes.arrayOf(ReviewTypes).isRequired;

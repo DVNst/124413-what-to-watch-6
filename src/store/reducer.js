@@ -21,6 +21,8 @@ const getFilmsByGenre = (genre, films) => ((genre !== ALL_GENRES) ? films.filter
 const initialState = {
   movies: [],
   moviesByGenre: [],
+  movieActive: {},
+  movieActiveComments: [],
   genres: [ALL_GENRES],
   genreActive: ALL_GENRES,
   moviePromo: {},
@@ -58,6 +60,16 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         moviesFavorites: action.payload,
+      };
+    case ActionType.LOAD_FILM:
+      return {
+        ...state,
+        movieActive: action.payload,
+      };
+    case ActionType.LOAD_COMMENTS:
+      return {
+        ...state,
+        movieActiveComments: action.payload,
       };
     case ActionType.REQUIRED_AUTHORIZATION:
       return {

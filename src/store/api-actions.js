@@ -6,18 +6,18 @@ export const fetchFilms = () => (dispatch, _getState, api) => (
     .then(({data}) => dispatch(ActionCreator.loadFilms(data)))
 );
 
-export const fetchFilmId = (id) => (dispatch, _getState, api) => (
-  api.get(`/films`, {id})
+export const fetchFilm = (id) => (dispatch, _getState, api) => (
+  api.get(`/films/${id}`)
     .then(({data}) => dispatch(ActionCreator.loadFilm(data)))
 );
 
-export const fetchFilmIdComments = (id) => (dispatch, _getState, api) => (
-  api.get(`/comments/`, {id})
+export const fetchComments = (id) => (dispatch, _getState, api) => (
+  api.get(`/comments/${id}`)
     .then(({data}) => dispatch(ActionCreator.loadComments(data)))
 );
 
-export const addComments = ({id}) => (dispatch, _getState, api) => (
-  api.post(`/comments/`, {id})
+export const addComments = ({id, comment}) => (dispatch, _getState, api) => (
+  api.post(`/comments/${id}`, {comment})
     .then(({data}) => dispatch(ActionCreator.addComments(data)))
 );
 
@@ -32,7 +32,7 @@ export const fetchFilmsFavorite = () => (dispatch, _getState, api) => (
 );
 
 export const addFilmFavorite = ({id, status}) => (dispatch, _getState, api) => (
-  api.post(`/favorite`, {id, status})
+  api.post(`/favorite/${id}`, {status})
     .then(({data}) => dispatch(ActionCreator.addFilmFavorite(data)))
 );
 

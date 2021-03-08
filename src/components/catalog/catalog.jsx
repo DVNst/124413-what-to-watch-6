@@ -7,10 +7,12 @@ import {ActionCreator} from '../../store/actions';
 
 import MovieList from '../movie-list/movie-list';
 import ShowMore from '../show-more/show-more';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 import {NUMBER_IN_SHOW} from '../../const';
+import {fetchFilms} from '../../store/api-actions';
 
-const Catalog = ({moviesByGenre, genres, genreActive, handleClickGenre}) => {
+const Catalog = ({moviesByGenre, isDataLoaded, onLoadData, genres, genreActive, handleClickGenre}) => {
   const getMoviesShow = (qty) => {
     return moviesByGenre.slice(0, qty);
   };
@@ -19,9 +21,15 @@ const Catalog = ({moviesByGenre, genres, genreActive, handleClickGenre}) => {
   const [numberMovies, setNumberMovies] = useState(NUMBER_IN_SHOW);
 
   useEffect(() => {
+    if (!isDataLoaded) {
+      onLoadData();
+    }
+  }, [isDataLoaded]);
+
+  useEffect(() => {
     setNumberMovies(NUMBER_IN_SHOW);
     setMoviesShow(getMoviesShow(NUMBER_IN_SHOW));
-  }, [genreActive]);
+  }, [genreActive, moviesByGenre]);
 
   const handleClickShowMore = () => {
     const _qty = numberMovies + NUMBER_IN_SHOW;
@@ -44,7 +52,10 @@ const Catalog = ({moviesByGenre, genres, genreActive, handleClickGenre}) => {
           </li>
         ))}
       </ul>
-      <MovieList movies={moviesShow} />
+      {!isDataLoaded ?
+        <LoadingScreen /> :
+        <MovieList movies={moviesShow} />
+      }
       {(numberMovies < moviesByGenre.length) &&
         <ShowMore onClickShowMore={handleClickShowMore} />}
     </section>
@@ -53,12 +64,17 @@ const Catalog = ({moviesByGenre, genres, genreActive, handleClickGenre}) => {
 
 Catalog.propTypes = {
   moviesByGenre: MoviesTypes,
+  isDataLoaded: PropTypes.bool.isRequired,
+  onLoadData: PropTypes.func.isRequired,
   genres: PropTypes.arrayOf(PropTypes.string).isRequired,
   genreActive: PropTypes.string.isRequired,
   handleClickGenre: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
+  onLoadData() {
+    dispatch(fetchFilms());
+  },
   handleClickGenre(genre) {
     dispatch(ActionCreator.changeGenre(genre));
     dispatch(ActionCreator.getFilmsByGenre(genre));
@@ -67,6 +83,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
   moviesByGenre: state.moviesByGenre,
+  isDataLoaded: state.isDataLoaded,
   genres: state.genres,
   genreActive: state.genreActive,
 });

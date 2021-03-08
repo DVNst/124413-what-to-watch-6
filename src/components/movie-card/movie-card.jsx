@@ -6,7 +6,7 @@ import {MovieTypes} from '../proptypes';
 import VideoPlayer from '../video-player/video-player';
 
 const MovieCard = ({movie, onMouseOverMovieCard, showVideoPlayer}) => {
-  const {id, name, previewImage, previewVideoLink} = movie;
+  const {id, name, preview_image: previewImage, preview_video_link: previewVideoLink} = movie;
   const url = `/films/${id}`;
 
   const [videoPlayerVisible, setVideoPlayerVisible] = useState(false);

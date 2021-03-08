@@ -1,17 +1,25 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 
-import {MovieTypes} from '../proptypes';
+import {MoviePromoTypes} from '../proptypes';
+
+import {fetchFilmPromo} from '../../store/api-actions';
 
 import Catalog from '../catalog/catalog';
 
-const Main = ({moviePromo}) => {
+const Main = ({moviePromo, onLoadPromo}) => {
+  const {background_image: backgroundImage, poster_image: posterImage} = moviePromo;
+  useEffect(() => {
+    onLoadPromo();
+  }, []);
+
   return (
     <>
       <section className="movie-card">
         <div className="movie-card__bg">
-          <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
+          <img src={backgroundImage} alt={moviePromo.name} />
         </div>
         <h1 className="visually-hidden">WTW</h1>
         <header className="page-header movie-card__head">
@@ -31,7 +39,7 @@ const Main = ({moviePromo}) => {
         <div className="movie-card__wrap">
           <div className="movie-card__info">
             <div className="movie-card__poster">
-              <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width={218} height={327} />
+              <img src={posterImage} alt={moviePromo.name} width={218} height={327} />
             </div>
             <div className="movie-card__desc">
               <h2 className="movie-card__title">{moviePromo.name}</h2>
@@ -77,12 +85,20 @@ const Main = ({moviePromo}) => {
 };
 
 Main.propTypes = {
-  moviePromo: MovieTypes,
+  moviePromo: MoviePromoTypes,
+  onLoadPromo: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   moviePromo: state.moviePromo,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  onLoadPromo() {
+    dispatch(fetchFilmPromo());
+  },
+});
+
+
 export {Main};
-export default connect(mapStateToProps)(Main);
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

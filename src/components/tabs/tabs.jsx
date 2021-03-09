@@ -11,7 +11,8 @@ import TabReviews from '../tab-reviews/tab-reviews';
 // import {reviews} from '../../mocks/reviews';
 
 const Tabs = ({movie, route, reviews: movieReviews}) => {
-  const searchFilter = new URLSearchParams(route.location.search).get(`tab`);
+  console.log('route', route);
+  const searchFilter = route ? new URLSearchParams(route.location.search).get(`tab`) : false;
   const [activeTab, setActiveTab] = useState(searchFilter || `Overview`);
 
   // const movieReviews = reviews.filter((review) => review.moviesId === movie.id);

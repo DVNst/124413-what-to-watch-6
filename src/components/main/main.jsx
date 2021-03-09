@@ -5,15 +5,16 @@ import PropTypes from 'prop-types';
 
 import {MoviePromoTypes} from '../proptypes';
 
-import {fetchFilmPromo} from '../../store/api-actions';
+// import {fetchFilmPromo} from '../../store/api-actions';
 
 import Catalog from '../catalog/catalog';
 
-const Main = ({moviePromo, onLoadPromo}) => {
+// const Main = ({moviePromo, onLoadPromo}) => {
+const Main = ({moviePromo}) => {
   const {background_image: backgroundImage, poster_image: posterImage} = moviePromo;
-  useEffect(() => {
-    onLoadPromo();
-  }, []);
+  // useEffect(() => {
+  //   onLoadPromo();
+  // }, []);
 
   return (
     <>
@@ -86,7 +87,7 @@ const Main = ({moviePromo, onLoadPromo}) => {
 
 Main.propTypes = {
   moviePromo: MoviePromoTypes,
-  onLoadPromo: PropTypes.func.isRequired,
+  // onLoadPromo: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -94,9 +95,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onLoadPromo() {
-    dispatch(fetchFilmPromo());
-  },
+  // onLoadPromo() {
+  //   dispatch(fetchFilmPromo());
+  // },
 });
 
 

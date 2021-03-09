@@ -10,24 +10,34 @@ import Tabs from '../tabs/tabs';
 import LoadingScreen from '../loading-screen/loading-screen';
 
 // import {films} from '../../mocks/films';
-import {fetchFilm, fetchComments, fetchFilms} from '../../store/api-actions';
+// import {fetchFilm, fetchComments, fetchFilms} from '../../store/api-actions';
 import {NUMBER_OF_SIMILAR} from '../../const';
 
-const Film = ({movie, route, onLoadData, reviews, movies, isDataLoaded}) => {
-  const {name, genre, released, poster_image: posterImage, background_image: backgroundImage} = movie;
-  const id = +route.match.params.id;
+// const Film = ({movie, route, onLoadData, reviews, movies, isDataLoaded}) => {
+const Film = ({movie, route, reviews, movies, isDataLoaded}) => {
+  console.log('------------------props------------------');
+  console.log('movie', movie);
+  console.log('route', route);
+  console.log('reviews', reviews);
+  console.log('movies', movies);
+  console.log('isDataLoaded', isDataLoaded);
+
+  const {name, genre, released, poster_image: posterImage, background_image: backgroundImage, background_color: backgroundColor} = movie;
+  // const {name, genre, released, poster_image: posterImage, background_image: backgroundImage} = movie ? movie : [`noname`, `nogenre`, 1111, ``, ``];
+
+  const id = route ? +route.match.params.id : false;
   const url = `${route.match.url.replace(/\/+$/, ``)}/review`;
   const moviesSimilar = movies.filter((film) => film.genre === genre && film.id !== id).slice(0, NUMBER_OF_SIMILAR);
 
-  useEffect(() => {
-    if (movie.id !== id || !isDataLoaded) {
-      onLoadData(id);
-    }
-  });
+  // useEffect(() => {
+  //   if (movie.id !== id || !isDataLoaded) {
+  //     onLoadData(id);
+  //   }
+  // });
 
   return (
     <>
-      <section className="movie-card movie-card--full">
+      <section className="movie-card movie-card--full" style={{backgroundColor: `${backgroundColor}`}}>
         <div className="movie-card__hero">
           <div className="movie-card__bg">
             <img src={backgroundImage} alt={name} />
@@ -77,17 +87,16 @@ const Film = ({movie, route, onLoadData, reviews, movies, isDataLoaded}) => {
             <div className="movie-card__poster movie-card__poster--big">
               <img src={posterImage} alt={name} width={218} height={327} />
             </div>
-            {movie.id && <Tabs movie={movie} route={route} reviews={reviews}/>}
+            {/* {movie && reviews && <Tabs movie={movie} route={route} reviews={reviews}/>} */}
           </div>
         </div>
       </section>
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-          {isDataLoaded ?
-            <MovieList movies={moviesSimilar} />
-            :
-            <LoadingScreen />
+          {isDataLoaded
+            ? <MovieList movies={moviesSimilar} />
+            : <LoadingScreen />
           }
         </section>
         <footer className="page-footer">
@@ -109,26 +118,26 @@ const Film = ({movie, route, onLoadData, reviews, movies, isDataLoaded}) => {
 
 Film.propTypes = {
   route: PropTypes.object,
-  movie: MovieTypes,
-  onLoadData: PropTypes.func.isRequired,
-  reviews: ReviewsTypes,
+  // movie: MovieTypes,
+  // onLoadData: PropTypes.func.isRequired,
+  // reviews: ReviewsTypes,
   movies: MoviesTypes,
   isDataLoaded: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  movie: state.movieActive,
+  // movie: state.movieActive,
   reviews: state.movieActiveComments,
   movies: state.movies,
   isDataLoaded: state.isDataLoaded,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onLoadData(id) {
-    dispatch(fetchFilm(id));
-    dispatch(fetchComments(id));
-    dispatch(fetchFilms());
-  },
+  // onLoadData(id) {
+  //   dispatch(fetchFilm(id));
+  //   dispatch(fetchComments(id));
+  //   dispatch(fetchFilms());
+  // },
 });
 
 export {Film};

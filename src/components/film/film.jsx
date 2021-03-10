@@ -1,19 +1,28 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useEffect} from 'react';
 import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
 
 import PropTypes from 'prop-types';
-import {MovieTypes} from '../proptypes';
+import {MovieTypes, ReviewsTypes, MoviesTypes} from '../proptypes';
 
 import MovieList from '../movie-list/movie-list';
 import Tabs from '../tabs/tabs';
+import LoadingScreen from '../loading-screen/loading-screen';
 
-import {films} from '../../mocks/films';
+import {fetchFilm, fetchComments, fetchFilms} from '../../store/api-actions';
 import {NUMBER_OF_SIMILAR} from '../../const';
 
-const Film = ({movie, route}) => {
-  const {id, name, genre, released, posterImage, backgroundImage} = movie;
+const Film = ({movie, route, onLoadData, reviews, movies, isDataLoaded}) => {
+  const {name, genre, released, poster_image: posterImage, background_image: backgroundImage} = movie;
+  const id = +route.match.params.id;
   const url = `${route.match.url.replace(/\/+$/, ``)}/review`;
-  const moviesSimilar = films.filter((film) => film.genre === genre && film.id !== id).slice(0, NUMBER_OF_SIMILAR);
+  const moviesSimilar = movies.filter((film) => film.genre === genre && film.id !== id).slice(0, NUMBER_OF_SIMILAR);
+
+  useEffect(() => {
+    if (movie.id !== id || !isDataLoaded) {
+      onLoadData(id);
+    }
+  });
 
   return (
     <>
@@ -67,16 +76,17 @@ const Film = ({movie, route}) => {
             <div className="movie-card__poster movie-card__poster--big">
               <img src={posterImage} alt={name} width={218} height={327} />
             </div>
-            <Tabs movie={movie} route={route}/>
+            {movie.id && <Tabs movie={movie} route={route} reviews={reviews}/>}
           </div>
         </div>
       </section>
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-          <div className="catalog__movies-list">
-            <MovieList movies={moviesSimilar} />
-          </div>
+          {isDataLoaded
+            ? <MovieList movies={moviesSimilar} />
+            : <LoadingScreen />
+          }
         </section>
         <footer className="page-footer">
           <div className="logo">
@@ -98,6 +108,26 @@ const Film = ({movie, route}) => {
 Film.propTypes = {
   route: PropTypes.object,
   movie: MovieTypes,
+  onLoadData: PropTypes.func.isRequired,
+  reviews: ReviewsTypes,
+  movies: MoviesTypes,
+  isDataLoaded: PropTypes.bool.isRequired,
 };
 
-export default Film;
+const mapStateToProps = (state) => ({
+  movie: state.movieActive,
+  reviews: state.movieActiveComments,
+  movies: state.movies,
+  isDataLoaded: state.isDataLoaded,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onLoadData(id) {
+    dispatch(fetchFilm(id));
+    dispatch(fetchComments(id));
+    dispatch(fetchFilms());
+  },
+});
+
+export {Film};
+export default connect(mapStateToProps, mapDispatchToProps)(Film);

@@ -6,7 +6,7 @@ import {MovieTypes} from '../proptypes';
 import VideoPlayer from '../video-player/video-player';
 
 const MovieCard = ({movie, onMouseOverMovieCard, showVideoPlayer}) => {
-  const {id, name, previewImage, previewVideoLink} = movie;
+  const {id, name, preview_image: previewImage, preview_video_link: previewVideoLink} = movie;
   const url = `/films/${id}`;
 
   const [videoPlayerVisible, setVideoPlayerVisible] = useState(false);
@@ -31,10 +31,9 @@ const MovieCard = ({movie, onMouseOverMovieCard, showVideoPlayer}) => {
       onMouseOver={() => onMouseOverMovieCard(id)}
       onMouseOut={() => onMouseOverMovieCard(null)}
     >
-      {videoPlayerVisible ?
-        <VideoPlayer url={previewVideoLink} poster={previewImage}/>
-        :
-        <>
+      {videoPlayerVisible
+        ? <VideoPlayer url={previewVideoLink} poster={previewImage}/>
+        : <>
           <div className="small-movie-card__image">
             <img src={previewImage} alt={name} width={280} height={175} />
           </div>

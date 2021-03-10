@@ -24,3 +24,8 @@ export const RatingLevelValue = {
   VERY_GOOD: 9,
   AWESOME: 10,
 };
+
+export const AuthorizationStatus = {
+  AUTH: `AUTH`,
+  NO_AUTH: `NO_AUTH`,
+};

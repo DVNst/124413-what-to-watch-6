@@ -2,19 +2,15 @@ import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 
 import PropTypes from 'prop-types';
-import {MovieTypes} from '../proptypes';
+import {MovieTypes, ReviewsTypes} from '../proptypes';
 
 import TabOverview from '../tab-overview/tab-overview';
 import TabDetails from '../tab-details/tab-details';
 import TabReviews from '../tab-reviews/tab-reviews';
 
-import {reviews} from '../../mocks/reviews';
-
-const Tabs = ({movie, route}) => {
+const Tabs = ({movie, route, reviews: movieReviews}) => {
   const searchFilter = new URLSearchParams(route.location.search).get(`tab`);
   const [activeTab, setActiveTab] = useState(searchFilter || `Overview`);
-
-  const movieReviews = reviews.filter((review) => review.moviesId === movie.id);
 
   const handleClickNav = (evt) => {
     evt.preventDefault();
@@ -58,6 +54,7 @@ const Tabs = ({movie, route}) => {
 Tabs.propTypes = {
   movie: MovieTypes,
   route: PropTypes.object,
+  reviews: ReviewsTypes,
 };
 
 export default Tabs;

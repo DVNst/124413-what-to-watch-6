@@ -116,6 +116,17 @@ const Film = ({movie, route, reviews, movies, isDataLoaded}) => {
   );
 };
 
+Film.defaultProps = {
+  movie: {
+    name: ``,
+    genre: ``,
+    released: ``,
+    poster_image: ``,
+    background_image: ``,
+    background_color: ``,
+  },
+};
+
 Film.propTypes = {
   route: PropTypes.object,
   // movie: MovieTypes,

@@ -2,8 +2,6 @@ import {ActionType} from './actions';
 
 import {ALL_GENRES, NUMBER_IN_GENRES, AuthorizationStatus} from '../const';
 
-// import {films} from '../mocks/films';
-
 const getGenres = (films) => {
   const _genres = new Map();
   films.map((film) => _genres.set(

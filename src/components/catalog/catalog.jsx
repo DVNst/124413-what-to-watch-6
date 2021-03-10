@@ -32,8 +32,8 @@ const Catalog = ({moviesByGenre, isDataLoaded, onLoadData, genres, genreActive, 
   }, [genreActive, moviesByGenre]);
 
   const handleClickShowMore = () => {
-    const _qty = numberMovies + NUMBER_IN_SHOW;
-    const qty = (_qty < moviesByGenre.length) ? _qty : moviesByGenre.length;
+    let qty = numberMovies + NUMBER_IN_SHOW;
+    qty = (qty < moviesByGenre.length) ? qty : moviesByGenre.length;
     setNumberMovies(qty);
     setMoviesShow(getMoviesShow(qty));
   };
@@ -52,10 +52,9 @@ const Catalog = ({moviesByGenre, isDataLoaded, onLoadData, genres, genreActive, 
           </li>
         ))}
       </ul>
-      {isDataLoaded ?
-        <MovieList movies={moviesShow} />
-        :
-        <LoadingScreen />
+      {isDataLoaded
+        ? <MovieList movies={moviesShow} />
+        : <LoadingScreen />
       }
       {(numberMovies < moviesByGenre.length) &&
         <ShowMore onClickShowMore={handleClickShowMore} />}

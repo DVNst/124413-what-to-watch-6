@@ -8,13 +8,9 @@ import TabOverview from '../tab-overview/tab-overview';
 import TabDetails from '../tab-details/tab-details';
 import TabReviews from '../tab-reviews/tab-reviews';
 
-// import {reviews} from '../../mocks/reviews';
-
 const Tabs = ({movie, route, reviews: movieReviews}) => {
   const searchFilter = new URLSearchParams(route.location.search).get(`tab`);
   const [activeTab, setActiveTab] = useState(searchFilter || `Overview`);
-
-  // const movieReviews = reviews.filter((review) => review.moviesId === movie.id);
 
   const handleClickNav = (evt) => {
     evt.preventDefault();

@@ -9,7 +9,6 @@ import MovieList from '../movie-list/movie-list';
 import Tabs from '../tabs/tabs';
 import LoadingScreen from '../loading-screen/loading-screen';
 
-// import {films} from '../../mocks/films';
 import {fetchFilm, fetchComments, fetchFilms} from '../../store/api-actions';
 import {NUMBER_OF_SIMILAR} from '../../const';
 
@@ -84,10 +83,9 @@ const Film = ({movie, route, onLoadData, reviews, movies, isDataLoaded}) => {
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-          {isDataLoaded ?
-            <MovieList movies={moviesSimilar} />
-            :
-            <LoadingScreen />
+          {isDataLoaded
+            ? <MovieList movies={moviesSimilar} />
+            : <LoadingScreen />
           }
         </section>
         <footer className="page-footer">
